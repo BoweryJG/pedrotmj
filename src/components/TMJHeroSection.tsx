@@ -120,7 +120,7 @@ const SubheadlineText = styled(Typography)(({ theme }) => ({
   marginBottom: theme.spacing(4),
 }));
 
-const CTAButton = styled(Button)(({ theme }) => ({
+const CTAButton = styled(Button)(() => ({
   fontFamily: '"Spectral", serif',
   fontSize: '1.1rem',
   padding: '16px 48px',
