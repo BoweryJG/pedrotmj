@@ -14,21 +14,14 @@ const fadeIn = keyframes`
   }
 `;
 
-const subtleFloat = keyframes`
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-5px);
-  }
-`;
-
 const pulseGlow = keyframes`
   0%, 100% {
-    opacity: 0.6;
+    opacity: 0.3;
+    transform: scale(1);
   }
   50% {
-    opacity: 1;
+    opacity: 0.8;
+    transform: scale(1.05);
   }
 `;
 
@@ -103,7 +96,6 @@ const AnimationContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  animation: `${subtleFloat} 4s ease-in-out infinite`,
   [theme.breakpoints.down('md')]: {
     marginTop: theme.spacing(4),
   },
@@ -118,7 +110,6 @@ const TMJHeroSection: React.FC = () => {
   }, []);
 
   const onCTAClick = () => {
-    // Scroll to the booking or contact section
     const bookingSection = document.getElementById('booking-section');
     if (bookingSection) {
       bookingSection.scrollIntoView({ behavior: 'smooth' });
@@ -141,91 +132,162 @@ const TMJHeroSection: React.FC = () => {
         </Box>
 
         <AnimationContainer>
-          <svg
-            width={isMobile ? "300" : "400"}
-            height={isMobile ? "300" : "400"}
-            viewBox="0 0 400 400"
-            style={{ overflow: 'visible' }}
+          <Box
+            sx={{
+              position: 'relative',
+              width: isMobile ? 300 : 400,
+              height: isMobile ? 300 : 400,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
           >
-            {/* Face Silhouette - Simple and elegant */}
-            <path
-              d="M 150 100 C 150 100, 120 120, 110 160 C 100 200, 100 240, 120 280 C 140 320, 160 340, 200 350 C 240 360, 280 350, 300 320 C 320 290, 330 250, 330 210 C 330 170, 320 130, 290 100 C 260 70, 220 60, 180 70 C 140 80, 150 100, 150 100 Z"
-              fill="none"
-              stroke="rgba(255, 255, 255, 0.1)"
-              strokeWidth="1"
-              style={{
+            {/* Professional medical illustration style */}
+            <svg
+              width="100%"
+              height="100%"
+              viewBox="0 0 400 400"
+              style={{ 
                 opacity: isVisible ? 1 : 0,
                 transition: 'opacity 1s ease-out'
               }}
-            />
-            
-            {/* TMJ Joint - Glowing point */}
-            <circle 
-              cx="260" 
-              cy="180" 
-              r="8" 
-              fill="none"
-              stroke="#FFD700"
-              strokeWidth="2"
-              style={{
-                opacity: isVisible ? 1 : 0,
-                animation: isVisible ? `${pulseGlow} 2s ease-in-out infinite` : 'none',
-                transition: 'opacity 1s ease-out 0.5s'
-              }}
-            />
-            
-            {/* Subtle circular guides */}
-            <circle 
-              cx="260" 
-              cy="180" 
-              r="30" 
-              fill="none"
-              stroke="rgba(255, 215, 0, 0.1)"
-              strokeWidth="1"
-              strokeDasharray="5 10"
-              style={{
-                opacity: isVisible ? 0.5 : 0,
-                transition: 'opacity 1s ease-out 0.7s'
-              }}
-            />
-            
-            <circle 
-              cx="260" 
-              cy="180" 
-              r="50" 
-              fill="none"
-              stroke="rgba(255, 215, 0, 0.05)"
-              strokeWidth="1"
-              strokeDasharray="10 20"
-              style={{
-                opacity: isVisible ? 0.3 : 0,
-                transition: 'opacity 1s ease-out 0.9s'
-              }}
-            />
+            >
+              {/* Background circle */}
+              <circle
+                cx="200"
+                cy="200"
+                r="180"
+                fill="none"
+                stroke="rgba(255, 215, 0, 0.1)"
+                strokeWidth="1"
+              />
 
-            {/* Clean, minimal lines suggesting precision */}
-            <g style={{
-              opacity: isVisible ? 0.6 : 0,
-              transition: 'opacity 1s ease-out 1.1s'
-            }}>
-              <line x1="260" y1="150" x2="260" y2="130" stroke="#FFD700" strokeWidth="1" opacity="0.5" />
-              <line x1="290" y1="180" x2="310" y2="180" stroke="#FFD700" strokeWidth="1" opacity="0.5" />
-              <line x1="260" y1="210" x2="260" y2="230" stroke="#FFD700" strokeWidth="1" opacity="0.5" />
-              <line x1="230" y1="180" x2="210" y2="180" stroke="#FFD700" strokeWidth="1" opacity="0.5" />
-            </g>
-          </svg>
+              {/* Jaw bone structure - anatomically inspired */}
+              <g transform="translate(200, 200)">
+                {/* Upper jaw (maxilla) */}
+                <path
+                  d="M -80 -40 Q -80 -60, -60 -70 Q -40 -75, 0 -75 Q 40 -75, 60 -70 Q 80 -60, 80 -40"
+                  fill="none"
+                  stroke="rgba(255, 255, 255, 0.3)"
+                  strokeWidth="2"
+                />
+                
+                {/* Lower jaw (mandible) */}
+                <path
+                  d="M -80 20 Q -80 40, -60 50 Q -40 55, 0 55 Q 40 55, 60 50 Q 80 40, 80 20"
+                  fill="none"
+                  stroke="rgba(255, 255, 255, 0.3)"
+                  strokeWidth="2"
+                />
+                
+                {/* TMJ joint indicators */}
+                <g>
+                  {/* Left TMJ */}
+                  <circle
+                    cx="-75"
+                    cy="-10"
+                    r="12"
+                    fill="none"
+                    stroke="#FFD700"
+                    strokeWidth="2"
+                    style={{
+                      animation: isVisible ? `${pulseGlow} 3s ease-in-out infinite` : 'none'
+                    }}
+                  />
+                  <circle
+                    cx="-75"
+                    cy="-10"
+                    r="4"
+                    fill="#FFD700"
+                    opacity="0.8"
+                  />
+                  
+                  {/* Right TMJ */}
+                  <circle
+                    cx="75"
+                    cy="-10"
+                    r="12"
+                    fill="none"
+                    stroke="#FFD700"
+                    strokeWidth="2"
+                    style={{
+                      animation: isVisible ? `${pulseGlow} 3s ease-in-out infinite 1.5s` : 'none'
+                    }}
+                  />
+                  <circle
+                    cx="75"
+                    cy="-10"
+                    r="4"
+                    fill="#FFD700"
+                    opacity="0.8"
+                  />
+                </g>
+
+                {/* Connection lines showing TMJ relationship */}
+                <line
+                  x1="-75"
+                  y1="-10"
+                  x2="-60"
+                  y2="20"
+                  stroke="rgba(255, 215, 0, 0.2)"
+                  strokeWidth="1"
+                  strokeDasharray="2 4"
+                />
+                <line
+                  x1="75"
+                  y1="-10"
+                  x2="60"
+                  y2="20"
+                  stroke="rgba(255, 215, 0, 0.2)"
+                  strokeWidth="1"
+                  strokeDasharray="2 4"
+                />
+              </g>
+
+              {/* Subtle grid pattern for medical precision feel */}
+              <defs>
+                <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                  <path
+                    d="M 40 0 L 0 0 0 40"
+                    fill="none"
+                    stroke="rgba(255, 215, 0, 0.03)"
+                    strokeWidth="1"
+                  />
+                </pattern>
+              </defs>
+              <rect width="400" height="400" fill="url(#grid)" />
+            </svg>
+
+            {/* Floating particles for premium feel */}
+            {[...Array(3)].map((_, i) => (
+              <Box
+                key={i}
+                sx={{
+                  position: 'absolute',
+                  width: 4,
+                  height: 4,
+                  backgroundColor: '#FFD700',
+                  borderRadius: '50%',
+                  opacity: 0.3,
+                  animation: `${fadeIn} 2s ease-out ${1 + i * 0.5}s backwards`,
+                  left: `${20 + i * 30}%`,
+                  top: `${30 + i * 20}%`,
+                }}
+              />
+            ))}
+          </Box>
         </AnimationContainer>
       </ContentWrapper>
 
-      {/* Background gradient effect */}
+      {/* Background gradient */}
       <Box
         sx={{
           position: 'absolute',
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
-          width: '100%',
-          height: '100%',
+          width: '120%',
+          height: '120%',
           background: 'radial-gradient(circle at 70% 50%, rgba(255, 215, 0, 0.05) 0%, transparent 50%)',
           pointerEvents: 'none',
         }}
