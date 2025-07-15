@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Typography, Button } from '@mui/material';
 import './TMJHeroSection.css';
 
 interface TMJHeroSectionProps {
@@ -64,18 +63,13 @@ const TMJHeroSection: React.FC<TMJHeroSectionProps> = ({ onCTAClick }) => {
             <span className="glint glint-2"></span>
             <span className="glint glint-3"></span>
           </div>
+          <div className="tmj-glare-overlay" />
         </div>
       </div>
       <div className="tmj-content">
-        <Typography variant="h1" className="tmj-title">
-          Relief You Can Feel. Freedom You Can Live.
-        </Typography>
-        <Typography className="tmj-subtitle">
-          Experience the future of TMJ therapy.
-        </Typography>
-        <Button className="tmj-cta-button" onClick={handleCTAClick}>
-          Book Your Transformation
-        </Button>
+        <h1 className={animate ? 'text-fade-in' : ''}>Relief You Can Feel. Freedom You Can Live.</h1>
+        <p className={animate ? 'text-fade-in' : ''}>Experience the future of TMJ therapy.</p>
+        <button className={animate ? 'cta-animate' : ''} onClick={handleCTAClick}>Book Your Transformation</button>
         {animate && <audio autoPlay src="/sounds/click.mp3" />}
       </div>
     </section>
