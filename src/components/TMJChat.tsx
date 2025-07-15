@@ -10,13 +10,14 @@ interface Message {
   timestamp: Date;
 }
 
-interface Conversation {
-  id: string;
-  user_id?: string;
-  messages: Message[];
-  created_at: Date;
-  updated_at: Date;
-}
+// Conversation interface for future Supabase integration
+// interface Conversation {
+//   id: string;
+//   user_id?: string;
+//   messages: Message[];
+//   created_at: Date;
+//   updated_at: Date;
+// }
 
 const quickReplies = [
   "What are the symptoms of TMJ?",
