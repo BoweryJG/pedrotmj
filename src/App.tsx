@@ -1,4 +1,4 @@
-import React from 'react';
+// React is imported via tsconfig
 import TMJHero from './components/TMJHero';
 import TMJSymptomChecker from './components/TMJSymptomChecker';
 import TMJTimeline from './components/TMJTimeline';
