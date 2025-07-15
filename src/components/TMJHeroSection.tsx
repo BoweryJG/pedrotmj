@@ -101,7 +101,11 @@ const AnimationContainer = styled(Box)(({ theme }) => ({
   },
 }));
 
-const TMJHeroSection: React.FC = () => {
+interface TMJHeroSectionProps {
+  onCTAClick?: () => void;
+}
+
+const TMJHeroSection: React.FC<TMJHeroSectionProps> = ({ onCTAClick }) => {
   const isMobile = useMediaQuery('(max-width: 768px)');
   const [isVisible, setIsVisible] = useState(false);
 
@@ -109,10 +113,14 @@ const TMJHeroSection: React.FC = () => {
     setIsVisible(true);
   }, []);
 
-  const onCTAClick = () => {
-    const bookingSection = document.getElementById('booking-section');
-    if (bookingSection) {
-      bookingSection.scrollIntoView({ behavior: 'smooth' });
+  const handleCTAClick = () => {
+    if (onCTAClick) {
+      onCTAClick();
+    } else {
+      const bookingSection = document.getElementById('booking-section');
+      if (bookingSection) {
+        bookingSection.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   };
 
@@ -126,7 +134,7 @@ const TMJHeroSection: React.FC = () => {
           <SubheadlineText>
             Experience the future of TMJ treatment with precision and elegance.
           </SubheadlineText>
-          <CTAButton variant="contained" size="large" onClick={onCTAClick}>
+          <CTAButton variant="contained" size="large" onClick={handleCTAClick}>
             Book Your Transformation
           </CTAButton>
         </Box>
