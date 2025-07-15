@@ -1,10 +1,10 @@
+/* Import custom luxury styles first */
+@import './luxury.css';
+@import './animations.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* Import custom luxury styles */
-@import url('../luxury.css');
-@import url('../animations.css');
 
 /* Global styles */
 body {
