@@ -209,10 +209,12 @@ export default function TMJChatbot({ isOpen, onClose, selectedSymptoms = [], sev
     setIsTyping(true);
 
     try {
-      const response = await chatService.sendMessage(inputValue, {
+      const response = await chatService.sendMessage(
+        inputValue, 
+        `tmj-${Date.now()}`,
         selectedSymptoms,
         severityLevel
-      });
+      );
 
       const assistantMessage: MessageType = {
         role: 'assistant',

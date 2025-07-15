@@ -39,14 +39,7 @@ const fadeIn = keyframes`
   }
 `;
 
-const dialRotation = keyframes`
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(90deg);
-  }
-`;
+// Removed unused dialRotation keyframe
 
 const tensionFade = keyframes`
   0% {
