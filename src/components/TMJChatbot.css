@@ -1,0 +1,1051 @@
+/* TMJ CHATBOT STYLES - LUXURY EDITION */
+
+/* CSS Variables for Luxury Effects */
+:root {
+  --bezel-silver: linear-gradient(135deg, #E8E8E8 0%, #B8B8B8 50%, #D0D0D0 100%);
+  --bezel-shadow: 0 0 20px rgba(0, 0, 0, 0.5), inset 0 0 3px rgba(255, 255, 255, 0.3);
+  --glass-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 50%, rgba(255, 255, 255, 0.05) 100%);
+  --spring-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --magnetic-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --gold-shimmer: linear-gradient(90deg, var(--luxury-gold) 0%, #FFF5DC 50%, var(--luxury-gold) 100%);
+}
+
+/* Main Chatbot Container with Luxury Bezel */
+.tmj-chatbot {
+  position: fixed;
+  bottom: 100px;
+  right: 2rem;
+  width: 420px;
+  height: 650px;
+  background: #000000;
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  z-index: 1001;
+  animation: luxuryEntrance 0.8s var(--spring-bounce);
+  
+  /* Metallic Bezel Effect */
+  padding: 12px;
+  background: var(--bezel-silver);
+  box-shadow: 
+    0 25px 50px rgba(0, 0, 0, 0.4),
+    0 10px 30px rgba(255, 215, 0, 0.2),
+    inset 0 1px 2px rgba(255, 255, 255, 0.6),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Inner Container with Glass Effect */
+.tmj-chatbot::before {
+  content: '';
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  background: linear-gradient(135deg, #0A0A0A 0%, #1A1A1A 100%);
+  border-radius: 16px;
+  z-index: -1;
+}
+
+/* Glass Reflection Layer */
+.tmj-chatbot::after {
+  content: '';
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  height: 50%;
+  background: var(--glass-gradient);
+  border-radius: 16px 16px 0 0;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* Micro Screws at Corners */
+.tmj-chatbot .micro-screw {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: radial-gradient(circle, #C0C0C0 0%, #808080 60%, #606060 100%);
+  border-radius: 50%;
+  box-shadow: 
+    inset 0 1px 2px rgba(255, 255, 255, 0.8),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.8),
+    0 1px 3px rgba(0, 0, 0, 0.5);
+  z-index: 10;
+}
+
+.tmj-chatbot .micro-screw::after {
+  content: '×';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  font-size: 10px;
+  color: #404040;
+  font-weight: bold;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.tmj-chatbot .micro-screw.top-left { top: 6px; left: 6px; }
+.tmj-chatbot .micro-screw.top-right { top: 6px; right: 6px; }
+.tmj-chatbot .micro-screw.bottom-left { bottom: 6px; left: 6px; }
+.tmj-chatbot .micro-screw.bottom-right { bottom: 6px; right: 6px; }
+
+/* Luxury Entrance Animation */
+@keyframes luxuryEntrance {
+  0% {
+    transform: translateY(100px) scale(0.9);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(-10px) scale(1.02);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* Metallic Shine Animation */
+@keyframes metallicShine {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+/* Header with Glass Effect */
+.chatbot-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, 
+    rgba(255, 215, 0, 0.15) 0%, 
+    rgba(255, 215, 0, 0.05) 50%, 
+    rgba(255, 215, 0, 0.1) 100%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 16px 16px 0 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Header Metallic Shine Effect */
+.chatbot-header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: var(--gold-shimmer);
+  opacity: 0;
+  transform: rotate(45deg);
+  transition: opacity 0.6s var(--magnetic-ease);
+  background-size: 300% 100%;
+  animation: metallicShine 8s infinite;
+}
+
+.chatbot-header:hover::before {
+  opacity: 0.1;
+}
+
+.header-content h3 {
+  color: var(--luxury-gold);
+  font-size: 1.3rem;
+  margin: 0;
+  font-family: 'Playfair Display', serif;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  letter-spacing: 1px;
+}
+
+.header-content p {
+  color: var(--luxury-silver);
+  font-size: 0.9rem;
+  margin: 0.2rem 0 0;
+  opacity: 0.9;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+}
+
+/* Luxury Close Button */
+.close-btn {
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  color: var(--luxury-silver);
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.4s var(--magnetic-ease);
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+}
+
+.close-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(circle, var(--luxury-gold) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  transition: width 0.3s, height 0.3s;
+  border-radius: 50%;
+}
+
+.close-btn:hover {
+  background: rgba(255, 215, 0, 0.2);
+  color: var(--luxury-gold);
+  transform: rotate(90deg) scale(1.1);
+  border-color: var(--luxury-gold);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+.close-btn:hover::before {
+  width: 100%;
+  height: 100%;
+}
+
+/* Symptom Summary with Glass Layer */
+.symptom-summary {
+  padding: 1rem 1.5rem;
+  background: linear-gradient(135deg, 
+    rgba(255, 215, 0, 0.08) 0%, 
+    rgba(255, 215, 0, 0.02) 100%);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border-bottom: 1px solid rgba(255, 215, 0, 0.15);
+  position: relative;
+}
+
+.summary-title {
+  color: var(--luxury-gold);
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.symptom-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.symptom-chip {
+  background: linear-gradient(135deg, 
+    rgba(255, 215, 0, 0.25) 0%, 
+    rgba(255, 215, 0, 0.15) 100%);
+  color: var(--luxury-gold);
+  padding: 0.3rem 0.85rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  border: 1px solid rgba(255, 215, 0, 0.4);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s var(--magnetic-ease);
+  position: relative;
+  overflow: hidden;
+}
+
+.symptom-chip::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.symptom-chip:hover::before {
+  left: 100%;
+}
+
+.symptom-chip:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+}
+
+/* Luxury Severity Bar */
+.severity-bar {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.severity-bar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, 
+    rgba(255, 255, 255, 0.1) 0%, 
+    transparent 50%, 
+    rgba(0, 0, 0, 0.1) 100%);
+  border-radius: 10px;
+}
+
+.severity-fill {
+  height: 100%;
+  background: var(--gold-shimmer);
+  background-size: 200% 100%;
+  animation: metallicShine 3s linear infinite;
+  transition: width 0.8s var(--spring-bounce);
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.severity-text {
+  color: var(--luxury-silver);
+  font-size: 0.85rem;
+  margin: 0;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+}
+
+/* Messages Container with Glass Background */
+.messages-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.5rem;
+  scroll-behavior: smooth;
+  background: linear-gradient(180deg, 
+    transparent 0%, 
+    rgba(0, 0, 0, 0.2) 100%);
+  position: relative;
+}
+
+/* Custom Luxury Scrollbar */
+.messages-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.messages-container::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 4px;
+}
+
+.messages-container::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, 
+    var(--luxury-gold) 0%, 
+    var(--luxury-gold-dark) 100%);
+  border-radius: 4px;
+  box-shadow: 0 0 6px rgba(255, 215, 0, 0.3);
+}
+
+.messages-container::-webkit-scrollbar-thumb:hover {
+  background: var(--luxury-gold);
+}
+
+/* Luxury Message Styles */
+.message {
+  margin-bottom: 1.2rem;
+  animation: luxuryMessageIn 0.5s var(--spring-bounce);
+  position: relative;
+}
+
+@keyframes luxuryMessageIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+  }
+  60% {
+    transform: translateY(-5px) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.message.user {
+  text-align: right;
+}
+
+/* User Message - Premium Gold Style */
+.message.user .message-content {
+  background: linear-gradient(135deg, 
+    var(--luxury-gold) 0%, 
+    #FFD700 50%, 
+    var(--luxury-gold-dark) 100%);
+  color: var(--luxury-black);
+  display: inline-block;
+  padding: 0.85rem 1.2rem;
+  border-radius: 20px 20px 4px 20px;
+  max-width: 80%;
+  text-align: left;
+  box-shadow: 
+    0 4px 15px rgba(255, 215, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  position: relative;
+  overflow: hidden;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+.message.user .message-content::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, 
+    transparent 30%, 
+    rgba(255, 255, 255, 0.3) 50%, 
+    transparent 70%);
+  transform: rotate(45deg);
+  animation: messageShine 3s infinite;
+}
+
+@keyframes messageShine {
+  0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+  100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+/* Assistant Message - Luxury Concierge Style */
+.message.assistant .message-content {
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.12) 0%, 
+    rgba(255, 255, 255, 0.08) 100%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--luxury-white);
+  display: inline-block;
+  padding: 0.85rem 1.2rem;
+  border-radius: 20px 20px 20px 4px;
+  max-width: 80%;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  box-shadow: 
+    0 4px 15px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  position: relative;
+  font-weight: 300;
+  letter-spacing: 0.4px;
+  line-height: 1.6;
+}
+
+/* Glass Reflection on Assistant Messages */
+.message.assistant .message-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(180deg, 
+    rgba(255, 255, 255, 0.1) 0%, 
+    transparent 100%);
+  border-radius: 20px 20px 0 0;
+  pointer-events: none;
+}
+
+.message-time {
+  font-size: 0.75rem;
+  color: var(--luxury-silver);
+  margin-top: 0.25rem;
+  opacity: 0.7;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+}
+
+/* Luxury Typing Indicator - Sound Wave Animation */
+.typing-indicator {
+  display: flex;
+  gap: 6px;
+  padding: 0.75rem 1rem;
+  align-items: center;
+}
+
+.typing-indicator span {
+  width: 3px;
+  height: 20px;
+  background: var(--luxury-gold);
+  border-radius: 10px;
+  animation: soundWave 1.2s infinite ease-in-out;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+  position: relative;
+}
+
+.typing-indicator span::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, 
+    rgba(255, 255, 255, 0.3) 0%, 
+    transparent 50%, 
+    rgba(255, 255, 255, 0.1) 100%);
+  border-radius: 10px;
+}
+
+.typing-indicator span:nth-child(1) { animation-delay: 0s; height: 15px; }
+.typing-indicator span:nth-child(2) { animation-delay: 0.1s; height: 25px; }
+.typing-indicator span:nth-child(3) { animation-delay: 0.2s; height: 20px; }
+.typing-indicator span:nth-child(4) { animation-delay: 0.3s; height: 30px; }
+.typing-indicator span:nth-child(5) { animation-delay: 0.4s; height: 18px; }
+
+@keyframes soundWave {
+  0%, 100% {
+    transform: scaleY(0.4);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+/* Gold Particle Effect Container */
+.gold-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.gold-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: radial-gradient(circle, var(--luxury-gold) 0%, transparent 70%);
+  border-radius: 50%;
+  opacity: 0;
+  animation: floatParticle 3s infinite;
+}
+
+@keyframes floatParticle {
+  0% {
+    transform: translateY(100%) translateX(0) scale(0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(80%) translateX(10px) scale(1);
+  }
+  80% {
+    opacity: 1;
+    transform: translateY(20%) translateX(-10px) scale(1);
+  }
+  100% {
+    transform: translateY(0) translateX(0) scale(0);
+    opacity: 0;
+  }
+}
+
+/* Luxury Quick Actions */
+.quick-actions {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0 1.5rem 1rem;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--luxury-gold) transparent;
+}
+
+.quick-actions::-webkit-scrollbar {
+  height: 6px;
+}
+
+.quick-actions::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+}
+
+.quick-actions::-webkit-scrollbar-thumb {
+  background: var(--gold-shimmer);
+  background-size: 200% 100%;
+  border-radius: 3px;
+  animation: metallicShine 4s linear infinite;
+}
+
+.quick-action-btn {
+  background: linear-gradient(135deg, 
+    rgba(255, 215, 0, 0.1) 0%, 
+    rgba(255, 215, 0, 0.05) 100%);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  color: var(--luxury-gold);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  padding: 0.6rem 1.2rem;
+  border-radius: 25px;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.4s var(--magnetic-ease);
+  position: relative;
+  overflow: hidden;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.quick-action-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(circle, 
+    rgba(255, 215, 0, 0.3) 0%, 
+    transparent 70%);
+  transform: translate(-50%, -50%);
+  transition: width 0.5s, height 0.5s;
+  border-radius: 50%;
+}
+
+.quick-action-btn:hover {
+  background: rgba(255, 215, 0, 0.2);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.2);
+  border-color: var(--luxury-gold);
+}
+
+.quick-action-btn:hover::before {
+  width: 150%;
+  height: 150%;
+}
+
+/* Luxury Input Container */
+.input-container {
+  display: flex;
+  gap: 0.75rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, 
+    rgba(0, 0, 0, 0.4) 0%, 
+    rgba(0, 0, 0, 0.6) 100%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 215, 0, 0.2);
+  position: relative;
+}
+
+/* Premium Input Field */
+.input-container input {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.03);
+  border: 2px solid rgba(255, 215, 0, 0.15);
+  color: var(--luxury-white);
+  padding: 0.85rem 1.25rem;
+  border-radius: 30px;
+  font-size: 0.95rem;
+  transition: all 0.4s var(--magnetic-ease);
+  font-weight: 300;
+  letter-spacing: 0.5px;
+  position: relative;
+}
+
+.input-container input::placeholder {
+  color: rgba(192, 192, 192, 0.5);
+  font-style: italic;
+}
+
+.input-container input:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--luxury-gold);
+  box-shadow: 
+    0 0 0 4px rgba(255, 215, 0, 0.1),
+    0 0 20px rgba(255, 215, 0, 0.2);
+  transform: translateY(-1px);
+}
+
+/* Animated Gold Outline on Focus */
+.input-container input:focus ~ .input-glow {
+  opacity: 1;
+}
+
+.input-glow {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  right: calc(1.5rem + 45px + 0.75rem);
+  height: 45px;
+  border-radius: 30px;
+  background: transparent;
+  border: 2px solid var(--luxury-gold);
+  opacity: 0;
+  transition: opacity 0.4s var(--magnetic-ease);
+  pointer-events: none;
+  filter: blur(4px);
+}
+
+/* Luxury Send Button */
+.send-btn {
+  width: 48px;
+  height: 48px;
+  background: var(--gold-shimmer);
+  background-size: 200% 100%;
+  border: 2px solid rgba(255, 215, 0, 0.3);
+  border-radius: 50%;
+  color: var(--luxury-black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.4s var(--spring-bounce);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    0 4px 15px rgba(255, 215, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.send-btn::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: var(--gold-shimmer);
+  background-size: 200% 100%;
+  border-radius: 50%;
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.3s;
+  animation: metallicShine 2s linear infinite;
+}
+
+.send-btn:hover {
+  transform: scale(1.15) rotate(10deg);
+  box-shadow: 
+    0 8px 25px rgba(255, 215, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.send-btn:hover::before {
+  opacity: 0.5;
+}
+
+.send-btn:active {
+  transform: scale(1.05) rotate(5deg);
+}
+
+/* Luxury Booking Form */
+.booking-form {
+  padding: 1.5rem;
+  background: linear-gradient(135deg, 
+    rgba(0, 0, 0, 0.4) 0%, 
+    rgba(0, 0, 0, 0.6) 100%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  max-height: 400px;
+  overflow-y: auto;
+  position: relative;
+}
+
+.booking-form::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  background: linear-gradient(180deg, 
+    rgba(255, 215, 0, 0.05) 0%, 
+    transparent 100%);
+  pointer-events: none;
+}
+
+.booking-form h4 {
+  color: var(--luxury-gold);
+  margin: 0 0 1.25rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.booking-form input,
+.booking-form select,
+.booking-form textarea {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.03);
+  border: 2px solid rgba(255, 215, 0, 0.15);
+  color: var(--luxury-white);
+  padding: 0.85rem 1rem;
+  margin-bottom: 1rem;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  transition: all 0.4s var(--magnetic-ease);
+  font-weight: 300;
+  letter-spacing: 0.5px;
+}
+
+.booking-form input::placeholder,
+.booking-form textarea::placeholder {
+  color: rgba(192, 192, 192, 0.5);
+  font-style: italic;
+}
+
+.booking-form input:focus,
+.booking-form select:focus,
+.booking-form textarea:focus {
+  outline: none;
+  border-color: var(--luxury-gold);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    0 0 0 3px rgba(255, 215, 0, 0.1),
+    0 0 15px rgba(255, 215, 0, 0.2);
+  transform: translateY(-1px);
+}
+
+/* Luxury Form Buttons */
+.form-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.submit-btn {
+  flex: 1;
+  background: var(--gold-shimmer);
+  background-size: 200% 100%;
+  color: var(--luxury-black);
+  border: none;
+  padding: 0.9rem;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.4s var(--spring-bounce);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    0 4px 15px rgba(255, 215, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.submit-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.3), 
+    transparent);
+  transition: left 0.5s;
+}
+
+.submit-btn:hover::before {
+  left: 100%;
+}
+
+.submit-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 
+    0 8px 25px rgba(255, 215, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  animation: metallicShine 2s linear infinite;
+}
+
+.submit-btn:active {
+  transform: translateY(-1px);
+}
+
+.cancel-btn {
+  flex: 0.5;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  color: var(--luxury-silver);
+  border: 2px solid rgba(192, 192, 192, 0.2);
+  padding: 0.9rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.4s var(--magnetic-ease);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.cancel-btn:hover {
+  background: rgba(192, 192, 192, 0.15);
+  border-color: var(--luxury-silver);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(192, 192, 192, 0.2);
+}
+
+/* Luxury Footer */
+.chatbot-footer {
+  padding: 1rem;
+  background: linear-gradient(135deg, 
+    rgba(0, 0, 0, 0.6) 0%, 
+    rgba(0, 0, 0, 0.8) 100%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 215, 0, 0.2);
+  border-radius: 0 0 16px 16px;
+  text-align: center;
+  position: relative;
+}
+
+.chatbot-footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 1px;
+  background: var(--gold-shimmer);
+  background-size: 200% 100%;
+  animation: metallicShine 4s linear infinite;
+}
+
+.chatbot-footer p {
+  color: var(--luxury-silver);
+  font-size: 0.8rem;
+  margin: 0;
+  font-weight: 300;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Luxury Loading States */
+.luxury-loader {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 215, 0, 0.2);
+  border-radius: 50%;
+  border-top-color: var(--luxury-gold);
+  animation: luxurySpin 0.8s linear infinite;
+}
+
+@keyframes luxurySpin {
+  to { transform: rotate(360deg); }
+}
+
+/* Mobile Responsive with Luxury Maintained */
+@media (max-width: 480px) {
+  .tmj-chatbot {
+    width: calc(100vw - 1rem);
+    height: calc(100vh - 100px);
+    right: 0.5rem;
+    bottom: 60px;
+    padding: 8px;
+  }
+  
+  .tmj-chatbot::before,
+  .tmj-chatbot::after {
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+  }
+  
+  .micro-screw {
+    width: 6px;
+    height: 6px;
+  }
+  
+  .micro-screw::after {
+    font-size: 8px;
+  }
+  
+  .micro-screw.top-left { top: 4px; left: 4px; }
+  .micro-screw.top-right { top: 4px; right: 4px; }
+  .micro-screw.bottom-left { bottom: 4px; left: 4px; }
+  .micro-screw.bottom-right { bottom: 4px; right: 4px; }
+  
+  .chatbot-header {
+    padding: 1rem;
+  }
+  
+  .header-content h3 {
+    font-size: 1.1rem;
+  }
+  
+  .header-content p {
+    font-size: 0.85rem;
+  }
+  
+  .messages-container {
+    padding: 1rem;
+  }
+  
+  .message.user .message-content,
+  .message.assistant .message-content {
+    max-width: 90%;
+    padding: 0.7rem 1rem;
+  }
+  
+  .input-container {
+    padding: 1rem;
+  }
+  
+  .input-container input {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .send-btn {
+    width: 42px;
+    height: 42px;
+  }
+  
+  .typing-indicator span {
+    width: 2px;
+  }
+  
+  .typing-indicator span:nth-child(1) { height: 12px; }
+  .typing-indicator span:nth-child(2) { height: 20px; }
+  .typing-indicator span:nth-child(3) { height: 16px; }
+  .typing-indicator span:nth-child(4) { height: 24px; }
+  .typing-indicator span:nth-child(5) { height: 14px; }
+}
+
+/* Performance Optimizations */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .tmj-chatbot {
+    border: 3px solid var(--luxury-gold);
+  }
+  
+  .message-content {
+    border-width: 2px;
+  }
+}
