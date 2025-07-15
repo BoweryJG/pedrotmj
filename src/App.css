@@ -1,0 +1,370 @@
+/* LUXURY TMJ LANDING PAGE STYLES */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #000000;
+  color: #FFFFFF;
+  overflow-x: hidden;
+}
+
+/* HERO SECTION */
+.tmj-hero {
+  min-height: 100vh;
+  background: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 2rem;
+}
+
+.hero-content {
+  text-align: center;
+  max-width: 1200px;
+  z-index: 10;
+  position: relative;
+}
+
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 6rem;
+  font-weight: 900;
+  background: linear-gradient(45deg, #FFD700, #FFA500, #FFD700);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 1rem;
+  letter-spacing: -2px;
+}
+
+.hero-subtitle {
+  font-size: 1.5rem;
+  color: #C0C0C0;
+  margin-bottom: 2rem;
+  font-weight: 300;
+}
+
+.hero-description {
+  font-size: 1.25rem;
+  color: #FFFFFF;
+  margin-bottom: 3rem;
+  line-height: 1.8;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+  color: #000000;
+  padding: 1rem 3rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-primary:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: #FFFFFF;
+  padding: 1rem 3rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: 2px solid #C0C0C0;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-secondary:hover {
+  background: #C0C0C0;
+  color: #000000;
+  transform: scale(1.05);
+}
+
+/* SYMPTOM CHECKER */
+.symptom-checker {
+  padding: 5rem 2rem;
+  background: #0A0A0A;
+}
+
+.symptom-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.symptom-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  text-align: center;
+  color: #FFD700;
+  margin-bottom: 3rem;
+}
+
+.symptom-grid {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.symptom-item {
+  background: #1A1A1A;
+  padding: 1.5rem;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.symptom-item:hover {
+  border-color: #FFD700;
+  transform: translateY(-2px);
+}
+
+.symptom-item.selected {
+  background: #2A2A2A;
+  border-color: #FFD700;
+}
+
+.symptom-label {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.1rem;
+}
+
+.symptom-checkbox {
+  width: 20px;
+  height: 20px;
+  accent-color: #FFD700;
+}
+
+/* TIMELINE */
+.timeline-section {
+  padding: 5rem 2rem;
+  background: #000000;
+}
+
+.timeline-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.timeline-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  text-align: center;
+  color: #FFD700;
+  margin-bottom: 3rem;
+}
+
+.timeline-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.timeline-step {
+  text-align: center;
+  padding: 2rem;
+  background: #0A0A0A;
+  border-radius: 15px;
+  border: 2px solid #C0C0C0;
+  transition: all 0.3s ease;
+}
+
+.timeline-step:hover {
+  border-color: #FFD700;
+  transform: translateY(-5px);
+}
+
+.step-number {
+  font-size: 3rem;
+  color: #FFD700;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.step-title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #FFFFFF;
+}
+
+.step-description {
+  color: #C0C0C0;
+  line-height: 1.6;
+}
+
+/* TECHNOLOGY */
+.technology-section {
+  padding: 5rem 2rem;
+  background: #0A0A0A;
+}
+
+.tech-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.tech-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  text-align: center;
+  color: #FFD700;
+  margin-bottom: 3rem;
+}
+
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.tech-card {
+  background: #1A1A1A;
+  padding: 2rem;
+  border-radius: 15px;
+  border: 2px solid #2A2A2A;
+  transition: all 0.3s ease;
+}
+
+.tech-card:hover {
+  border-color: #FFD700;
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
+}
+
+.tech-icon {
+  width: 60px;
+  height: 60px;
+  color: #FFD700;
+  margin-bottom: 1rem;
+}
+
+.tech-name {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #FFFFFF;
+}
+
+.tech-description {
+  color: #C0C0C0;
+  line-height: 1.6;
+}
+
+/* TESTIMONIALS */
+.testimonials-section {
+  padding: 5rem 2rem;
+  background: #000000;
+}
+
+.testimonials-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.testimonials-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  text-align: center;
+  color: #FFD700;
+  margin-bottom: 3rem;
+}
+
+.testimonial-card {
+  background: #0A0A0A;
+  padding: 3rem;
+  border-radius: 15px;
+  border: 2px solid #C0C0C0;
+  margin-bottom: 2rem;
+}
+
+.testimonial-text {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  margin-bottom: 2rem;
+  color: #FFFFFF;
+  font-style: italic;
+}
+
+.testimonial-author {
+  color: #FFD700;
+  font-weight: 600;
+}
+
+.testimonial-rating {
+  color: #FFD700;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+/* CHAT BUTTON */
+.chat-launcher {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 70px;
+  height: 70px;
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.chat-launcher:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 30px rgba(255, 215, 0, 0.6);
+}
+
+.chat-icon {
+  width: 30px;
+  height: 30px;
+  color: #000000;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 3rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.2rem;
+  }
+  
+  .hero-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .tech-grid,
+  .timeline-steps {
+    grid-template-columns: 1fr;
+  }
+}

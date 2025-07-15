@@ -1,33 +1,64 @@
-/* Import custom luxury styles first */
-@import './luxury.css';
-@import './animations.css';
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Luxury Color Variables */
+:root {
+  --luxury-black: #0A0A0A;
+  --luxury-gold: #D4AF37;
+  --luxury-silver: #C0C0C0;
+  --luxury-white: #FAFAFA;
+}
+
 /* Global styles */
 body {
   font-family: 'Montserrat', sans-serif;
-  background-color: #FAFAFA;
-  color: #0A0A0A;
+  background-color: var(--luxury-black);
+  color: var(--luxury-white);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Selection styles */
-::selection {
-  background-color: rgba(212, 175, 55, 0.2);
-  color: #0A0A0A;
+/* Gold accents */
+.text-luxury-gold {
+  color: var(--luxury-gold);
 }
 
-/* Focus styles for accessibility */
-*:focus {
-  outline: 2px solid #D4AF37;
-  outline-offset: 2px;
+.bg-luxury-gold {
+  background-color: var(--luxury-gold);
 }
 
-/* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
+.border-luxury-gold {
+  border-color: var(--luxury-gold);
+}
+
+/* Silver accents */
+.text-luxury-silver {
+  color: var(--luxury-silver);
+}
+
+.bg-luxury-silver {
+  background-color: var(--luxury-silver);
+}
+
+.border-luxury-silver {
+  border-color: var(--luxury-silver);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--luxury-black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--luxury-gold);
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--luxury-silver);
 }
