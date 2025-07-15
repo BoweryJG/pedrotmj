@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import custom luxury styles */
+@import url('../luxury.css');
+@import url('../animations.css');
+
+/* Global styles */
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #FAFAFA;
+  color: #0A0A0A;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Selection styles */
+::selection {
+  background-color: rgba(212, 175, 55, 0.2);
+  color: #0A0A0A;
+}
+
+/* Focus styles for accessibility */
+*:focus {
+  outline: 2px solid #D4AF37;
+  outline-offset: 2px;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
