@@ -17,11 +17,14 @@
 
 /* BODY STYLES */
 body {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   background-color: var(--luxury-black);
   color: var(--luxury-white);
   overflow-x: hidden;
-  /* Restored default cursor */
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 /* NOISE TEXTURE OVERLAY */
