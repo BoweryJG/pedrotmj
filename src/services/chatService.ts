@@ -22,8 +22,8 @@ class TMJChatService {
   
   async sendMessage(message: string, conversationId: string, symptoms: string[], severityLevel: number): Promise<string> {
     try {
-      // Call backend chat API
-      const response = await fetch(`${this.backendUrl}/api/chat`, {
+      // First try the chat endpoint
+      let response = await fetch(`${this.backendUrl}/api/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -39,6 +39,27 @@ class TMJChatService {
           }
         })
       });
+
+      // If chat endpoint fails, try alternative endpoints
+      if (!response.ok) {
+        // Try without /api prefix
+        response = await fetch(`${this.backendUrl}/chat`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            message,
+            conversationId,
+            context: {
+              type: 'tmj_consultation',
+              symptoms,
+              severityLevel,
+              specialty: 'TMJ'
+            }
+          })
+        });
+      }
 
       if (!response.ok) {
         throw new Error('Chat service error');
