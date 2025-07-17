@@ -18,7 +18,7 @@ interface Appointment {
 }
 
 class TMJChatService {
-  private backendUrl = import.meta.env.VITE_BACKEND_URL || 'https://your-backend-url.com';
+  private backendUrl = import.meta.env.VITE_BACKEND_URL || 'https://pedrobackend.onrender.com';
   
   async sendMessage(message: string, conversationId: string, symptoms: string[], severityLevel: number): Promise<string> {
     try {

@@ -1,91 +1,76 @@
-/* TMJ Hero Section - Luxury Professional Design */
+/* TMJ Hero Section - Fixed Layout */
 .tmj-hero {
   min-height: 100vh;
-  background: 
-    radial-gradient(ellipse 80% 50% at 20% 40%, rgba(212, 175, 55, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse 60% 40% at 80% 60%, rgba(255, 255, 255, 0.03) 0%, transparent 50%),
-    linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 6rem;
-  padding: 4rem 6vw;
-  position: relative;
-  overflow: hidden;
-  will-change: transform;
-  contain: layout style paint;
-}
-
-.tmj-hero::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60"><defs><pattern id="grain" width="60" height="60" patternUnits="userSpaceOnUse"><circle cx="15" cy="15" r="0.8" fill="rgba(212,175,55,0.02)"/><circle cx="45" cy="45" r="0.6" fill="rgba(255,255,255,0.01)"/><circle cx="30" cy="5" r="0.4" fill="rgba(212,175,55,0.03)"/><circle cx="5" cy="55" r="0.4" fill="rgba(255,255,255,0.02)"/></pattern></defs><rect width="60" height="60" fill="url(%23grain)"/></svg>');
-  opacity: 0.3;
-  pointer-events: none;
-  animation: subtleFloat 20s ease-in-out infinite;
-}
-
-@keyframes subtleFloat {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-5px); }
-}
-
-/* Jaw Animation Container */
-.tmj-jaw {
-  position: relative;
-  width: 400px;
-  height: 400px;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  will-change: transform;
-  contain: layout style paint;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-content {
+  max-width: 1200px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.hero-visual {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 500px;
 }
 
 .jaw-svg {
   width: 100%;
   height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
+  max-width: 400px;
+  max-height: 300px;
 }
 
 .jaw-svg path {
-  transition: stroke-dasharray 2s ease-out, stroke-dashoffset 2s ease-out;
-  stroke-dasharray: 200;
-  stroke-dashoffset: 200;
+  transition: all 2s ease-out;
+  stroke-dasharray: 300;
+  stroke-dashoffset: 300;
+}
+
+.jaw-svg path.jaw-tense {
+  stroke: rgba(255, 255, 255, 0.2);
+  stroke-dashoffset: 300;
 }
 
 .jaw-svg path.jaw-relax {
-  stroke-dashoffset: 0;
   stroke: url(#jawGradient);
+  stroke-dashoffset: 0;
   filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.4));
 }
 
 /* TMJ Marker */
-.jaw-svg circle[r="3"] {
+.jaw-svg circle[r="4"] {
   opacity: 0;
   transform: scale(0.5);
   transition: opacity 0.5s ease-out 2.5s, transform 0.5s ease-out 2.5s;
 }
 
-.jaw-svg circle[r="3"].tmj-marker {
+.jaw-svg circle[r="4"].tmj-marker {
   opacity: 1;
   transform: scale(1);
 }
 
 /* Golden Pulse Ring */
-.jaw-svg circle[r="25"] {
+.jaw-svg circle[r="30"] {
   opacity: 0;
   transform: scale(0.3);
   transition: opacity 1s ease-out 2s, transform 1s ease-out 2s;
 }
 
-.jaw-svg circle[r="25"].golden-pulse {
+.jaw-svg circle[r="30"].golden-pulse {
   opacity: 1;
   transform: scale(1);
   animation: goldenPulseExpand 2s ease-out forwards;
@@ -107,11 +92,14 @@
   }
 }
 
-/* Cartier-Style Dial */
+/* TMJ Dial */
 .tmj-dial {
   position: absolute;
+  top: 50%;
+  left: 50%;
   width: 120px;
   height: 120px;
+  transform: translate(-50%, -50%);
   background: 
     radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.15) 0%, transparent 30%),
     radial-gradient(circle at 70% 70%, rgba(0, 0, 0, 0.2) 0%, transparent 30%),
@@ -127,32 +115,48 @@
   align-items: center;
   justify-content: center;
   transition: transform 2s cubic-bezier(0.25, 0.1, 0.25, 1);
-  will-change: transform;
-  contain: layout style paint;
 }
 
 .tmj-dial.spin {
-  transform: rotate(90deg);
+  transform: translate(-50%, -50%) rotate(90deg);
   animation: mechanicalClick 0.3s ease-out;
   animation-delay: 1.8s;
 }
 
 @keyframes mechanicalClick {
   0% {
-    transform: rotate(0deg) scale(1);
+    transform: translate(-50%, -50%) rotate(0deg) scale(1);
   }
   30% {
-    transform: rotate(15deg) scale(1.02);
+    transform: translate(-50%, -50%) rotate(15deg) scale(1.02);
   }
   60% {
-    transform: rotate(75deg) scale(0.98);
+    transform: translate(-50%, -50%) rotate(75deg) scale(0.98);
   }
   100% {
-    transform: rotate(90deg) scale(1);
+    transform: translate(-50%, -50%) rotate(90deg) scale(1);
   }
 }
 
-/* Cartier Screws */
+.dial-outer-ring {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2px solid rgba(212, 175, 55, 0.3);
+  animation: ringGlow 3s ease-in-out infinite;
+}
+
+@keyframes ringGlow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+  }
+}
+
+/* Screws */
 .tmj-dial-screws {
   position: absolute;
   width: 100%;
@@ -329,69 +333,61 @@
   }
 }
 
-/* Content Section */
-.tmj-content {
-  max-width: 500px;
+/* Hero Text */
+.hero-text {
   text-align: left;
-  z-index: 2;
+  color: white;
 }
 
-.tmj-content h1 {
+.hero-text h1 {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(2.8rem, 5vw, 4.2rem);
+  font-size: clamp(2.5rem, 5vw, 4rem);
   font-weight: 400;
-  line-height: 1.15;
+  line-height: 1.2;
   background: linear-gradient(135deg, #FFD700 0%, #D4AF37 50%, #B8860B 100%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   opacity: 0;
   transform: translateY(40px);
   transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  letter-spacing: -0.02em;
-  will-change: transform, opacity;
 }
 
-.tmj-content h1.text-fade-in {
+.hero-text h1.text-fade-in {
   opacity: 1;
   transform: translateY(0);
   transition-delay: 0.8s;
 }
 
-.tmj-content p {
+.hero-text p {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
   font-weight: 300;
   color: rgba(245, 245, 245, 0.9);
-  margin-bottom: 3rem;
+  margin-bottom: 2.5rem;
   opacity: 0;
   transform: translateY(30px);
   transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   line-height: 1.6;
-  max-width: 90%;
   font-style: italic;
-  will-change: transform, opacity;
 }
 
-.tmj-content p.text-fade-in {
+.hero-text p.text-fade-in {
   opacity: 1;
   transform: translateY(0);
   transition-delay: 1.2s;
 }
 
-.tmj-content button {
+.hero-text button {
   background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
   color: #0A0A0A;
   font-family: 'Playfair Display', serif;
   font-size: 1.1rem;
   font-weight: 500;
-  padding: 1.2rem 3rem;
-  border: 2px solid transparent;
+  padding: 1rem 2.5rem;
+  border: none;
   border-radius: 2px;
-  text-transform: none;
-  letter-spacing: 0.8px;
   cursor: pointer;
   opacity: 0;
   transform: translateY(30px) scale(0.95);
@@ -399,108 +395,66 @@
   position: relative;
   overflow: hidden;
   box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
-  will-change: transform, opacity;
 }
 
-.tmj-content button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: left 0.6s ease;
-}
-
-.tmj-content button:hover::before {
-  left: 100%;
-}
-
-.tmj-content button.cta-animate {
+.hero-text button.cta-animate {
   opacity: 1;
   transform: translateY(0) scale(1);
   transition-delay: 1.6s;
 }
 
-.tmj-content button:hover {
+.hero-text button:hover {
   background: linear-gradient(135deg, #FFD700 0%, #D4AF37 100%);
   transform: translateY(-3px) scale(1.03);
   box-shadow: 0 12px 35px rgba(212, 175, 55, 0.4);
-  border-color: rgba(255, 215, 0, 0.3);
 }
 
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Enhanced Responsive Design */
+/* Responsive Design */
 @media (max-width: 1024px) {
-  .tmj-hero {
-    gap: 4rem;
-    padding: 3rem 4vw;
+  .hero-content {
+    gap: 3rem;
   }
   
-  .tmj-jaw {
-    width: 350px;
-    height: 350px;
+  .hero-visual {
+    min-height: 400px;
   }
 }
 
 @media (max-width: 768px) {
-  .tmj-hero {
-    flex-direction: column;
-    gap: 3rem;
-    padding: 2rem;
+  .hero-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
     text-align: center;
   }
   
-  .tmj-jaw {
-    width: 280px;
-    height: 280px;
+  .hero-visual {
+    min-height: 300px;
     order: 2;
   }
   
-  .tmj-dial {
-    width: 90px;
-    height: 90px;
-  }
-  
-  .tmj-content {
+  .hero-text {
     text-align: center;
-    max-width: 100%;
     order: 1;
   }
   
-  .tmj-content p {
-    max-width: 100%;
-    margin-bottom: 2rem;
+  .tmj-dial {
+    width: 100px;
+    height: 100px;
   }
   
-  .tmj-content button {
-    padding: 1rem 2.5rem;
-    font-size: 1rem;
-    width: auto;
-    min-width: 200px;
+  .tmj-dial-center {
+    width: 16px;
+    height: 16px;
   }
 }
 
 @media (max-width: 480px) {
   .tmj-hero {
-    padding: 1.5rem 1rem;
-    gap: 2rem;
+    padding: 1rem;
   }
   
-  .tmj-jaw {
-    width: 240px;
-    height: 240px;
+  .hero-visual {
+    min-height: 250px;
   }
   
   .tmj-dial {
@@ -508,17 +462,8 @@
     height: 80px;
   }
   
-  .tmj-content button {
-    padding: 0.9rem 2rem;
-    min-width: 180px;
-  }
-}
-
-/* High resolution displays */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-  .tmj-content h1 {
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  .tmj-dial-center {
+    width: 12px;
+    height: 12px;
   }
 }
