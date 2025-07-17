@@ -187,6 +187,13 @@
   max-height: 400px;
   position: relative;
   z-index: 2;
+  filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
+  transform: rotateX(2deg) rotateY(-1deg);
+  transition: transform 0.3s ease;
+}
+
+.tmj-anatomy-svg:hover {
+  transform: rotateX(0deg) rotateY(0deg) scale(1.02);
 }
 
 /* Upper Jaw Animation */
@@ -249,7 +256,10 @@
   0% {
     transform: rotate(0deg);
   }
-  50% {
+  30% {
+    transform: rotate(12deg);
+  }
+  60% {
     transform: rotate(8deg);
   }
   100% {
@@ -326,6 +336,29 @@
   50% {
     stroke-width: 8;
     opacity: 0.9;
+  }
+}
+
+/* Enhanced muscle activation */
+.muscle-active {
+  animation: muscleActivation 1s ease-in-out;
+}
+
+@keyframes muscleActivation {
+  0% {
+    stroke-width: 6;
+    opacity: 0.7;
+    filter: drop-shadow(0 0 5px rgba(220, 20, 60, 0.3));
+  }
+  50% {
+    stroke-width: 10;
+    opacity: 1;
+    filter: drop-shadow(0 0 20px rgba(220, 20, 60, 0.8));
+  }
+  100% {
+    stroke-width: 6;
+    opacity: 0.7;
+    filter: drop-shadow(0 0 5px rgba(220, 20, 60, 0.3));
   }
 }
 
@@ -486,6 +519,97 @@
   }
 }
 
+/* ========== DYNAMIC ENERGY WAVES ========== */
+.energy-waves {
+  opacity: 0;
+  animation: energyWavesActivate 3s ease-out forwards;
+  animation-delay: 8.5s;
+}
+
+.energy-waves.active {
+  animation: energyWavesActivate 3s ease-out forwards;
+  animation-delay: 8.5s;
+}
+
+@keyframes energyWavesActivate {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.wave-ring {
+  animation: waveExpansion 3s ease-out infinite;
+  animation-delay: var(--delay);
+}
+
+@keyframes waveExpansion {
+  0% {
+    opacity: 0.8;
+    stroke-width: 3;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 0.4;
+    stroke-width: 2;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    stroke-width: 1;
+    transform: scale(1.5);
+  }
+}
+
+/* ========== FLOATING MEDICAL DATA ========== */
+.medical-data {
+  opacity: 0;
+  animation: medicalDataReveal 2s ease-out forwards;
+  animation-delay: 9s;
+}
+
+.medical-data.float {
+  animation: medicalDataReveal 2s ease-out forwards;
+  animation-delay: 9s;
+}
+
+@keyframes medicalDataReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.data-point {
+  animation: dataPointFloat 4s ease-in-out infinite;
+  animation-delay: var(--delay);
+}
+
+@keyframes dataPointFloat {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px);
+    opacity: 0.8;
+  }
+  25% {
+    transform: translateY(-8px) translateX(2px);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-4px) translateX(-2px);
+    opacity: 0.9;
+  }
+  75% {
+    transform: translateY(-12px) translateX(4px);
+    opacity: 1;
+  }
+}
+
 /* ========== PRECISION INSTRUMENTS ========== */
 .precision-instruments {
   position: absolute;
@@ -497,6 +621,8 @@
   opacity: 0;
   animation: instrumentsDeploy 3s ease-out forwards;
   animation-delay: 9s;
+  transform-style: preserve-3d;
+  perspective: 1000px;
 }
 
 .precision-instruments.deploy {
@@ -507,11 +633,11 @@
 @keyframes instrumentsDeploy {
   0% {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(30px) rotateX(10deg);
   }
   100% {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) rotateX(0deg);
   }
 }
 

@@ -13,8 +13,8 @@ const TMJHeroSection: React.FC = () => {
   useEffect(() => {
     if (animate) {
       const phaseInterval = setInterval(() => {
-        setPhase(prev => (prev + 1) % 4);
-      }, 3000);
+        setPhase(prev => (prev + 1) % 6);
+      }, 2500);
       return () => clearInterval(phaseInterval);
     }
   }, [animate]);
@@ -114,7 +114,7 @@ const TMJHeroSection: React.FC = () => {
                 strokeWidth="8"
                 fill="none"
                 filter="url(#glow)"
-                className={`lower-jaw ${animate ? 'animate' : ''} ${phase === 1 ? 'jaw-open' : ''}`}
+                className={`lower-jaw ${animate ? 'animate' : ''} ${phase === 1 || phase === 3 || phase === 5 ? 'jaw-open' : ''}`}
               />
 
               {/* TMJ Joint Left */}
@@ -145,8 +145,8 @@ const TMJHeroSection: React.FC = () => {
                   stroke="url(#muscleGradient)"
                   strokeWidth="6"
                   fill="none"
-                  opacity="0.7"
-                  className="temporalis"
+                  opacity={phase === 2 || phase === 4 ? "0.9" : "0.7"}
+                  className={`temporalis ${phase === 2 || phase === 4 ? 'muscle-active' : ''}`}
                 />
                 
                 {/* Masseter Muscle */}
@@ -155,8 +155,8 @@ const TMJHeroSection: React.FC = () => {
                   stroke="url(#muscleGradient)"
                   strokeWidth="6"
                   fill="none"
-                  opacity="0.7"
-                  className="masseter"
+                  opacity={phase === 1 || phase === 3 || phase === 5 ? "0.9" : "0.7"}
+                  className={`masseter ${phase === 1 || phase === 3 || phase === 5 ? 'muscle-active' : ''}`}
                 />
               </g>
 
@@ -221,6 +221,69 @@ const TMJHeroSection: React.FC = () => {
                     className="energy-ring"
                     style={{ '--delay': `${i * 0.2}s` } as React.CSSProperties}
                   />
+                ))}
+              </g>
+
+              {/* Dynamic Energy Waves from TMJ Joints */}
+              <g className={`energy-waves ${animate ? 'active' : ''}`}>
+                {[...Array(6)].map((_, i) => (
+                  <g key={i}>
+                    {/* Left TMJ waves */}
+                    <circle
+                      cx="110"
+                      cy="200"
+                      r={15 + i * 12}
+                      fill="none"
+                      stroke="#FFD700"
+                      strokeWidth="2"
+                      opacity="0.4"
+                      className="wave-ring"
+                      style={{ 
+                        '--delay': `${i * 0.3}s`,
+                        '--phase': phase % 3 
+                      } as React.CSSProperties}
+                    />
+                    
+                    {/* Right TMJ waves */}
+                    <circle
+                      cx="410"
+                      cy="200"
+                      r={15 + i * 12}
+                      fill="none"
+                      stroke="#FFD700"
+                      strokeWidth="2"
+                      opacity="0.4"
+                      className="wave-ring"
+                      style={{ 
+                        '--delay': `${i * 0.3 + 0.1}s`,
+                        '--phase': (phase + 1) % 3 
+                      } as React.CSSProperties}
+                    />
+                  </g>
+                ))}
+              </g>
+
+              {/* Floating Medical Data Points */}
+              <g className={`medical-data ${animate ? 'float' : ''}`}>
+                {[
+                  { x: 180, y: 120, text: "12°", type: "angle" },
+                  { x: 320, y: 140, text: "98%", type: "efficiency" },
+                  { x: 150, y: 280, text: "0.3s", type: "time" },
+                  { x: 350, y: 270, text: "OPTIMAL", type: "status" }
+                ].map((point, i) => (
+                  <g key={i} className="data-point" style={{ '--delay': `${i * 0.5}s` } as React.CSSProperties}>
+                    <circle cx={point.x} cy={point.y} r="3" fill="#00FF00" opacity="0.8" />
+                    <text
+                      x={point.x + 8}
+                      y={point.y + 2}
+                      fill="#00FF00"
+                      fontSize="8"
+                      opacity="0.9"
+                      fontFamily="Courier New"
+                    >
+                      {point.text}
+                    </text>
+                  </g>
                 ))}
               </g>
             </svg>
