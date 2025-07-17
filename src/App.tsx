@@ -71,7 +71,7 @@ function App() {
       <div className="noise-overlay"></div>
 
       {/* HERO SECTION */}
-      <TMJHeroSection onCTAClick={openChat} />
+      <TMJHeroSection />
 
       {/* SYMPTOM CHECKER */}
       <section className="symptom-checker">
