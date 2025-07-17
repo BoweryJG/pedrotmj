@@ -4,7 +4,31 @@ interface Message {
   role: 'user' | 'assistant';
   content: string;
   timestamp: Date;
+  bookingSlots?: BookingSlot[];
+  appointmentRequestId?: string;
+  isBookingRequest?: boolean;
 }
+
+interface BookingSlot {
+  id: string;
+  displayText: string;
+  date: string;
+  time: string;
+  timestamp: string;
+}
+
+interface ChatResponse {
+  response: string;
+  conversationId: string;
+  stage: string;
+  gatheredInfo: any;
+  bookingSlots?: BookingSlot[];
+  appointmentRequestId?: string;
+  isBookingRequest?: boolean;
+  isInfoRequest?: boolean;
+  isPainExpression?: boolean;
+}
+
 
 interface Appointment {
   patient_name: string;
@@ -20,9 +44,9 @@ interface Appointment {
 class TMJChatService {
   private backendUrl = import.meta.env.VITE_BACKEND_URL || 'https://pedrobackend.onrender.com';
   
-  async sendMessage(message: string, conversationId: string, symptoms: string[], severityLevel: number): Promise<string> {
+  async sendMessage(message: string, conversationId: string, symptoms: string[], severityLevel: number): Promise<ChatResponse> {
     try {
-      // First try the chat endpoint
+      // Try the enhanced chat endpoint
       let response = await fetch(`${this.backendUrl}/api/chat`, {
         method: 'POST',
         headers: {
@@ -65,11 +89,16 @@ class TMJChatService {
         throw new Error('Chat service error');
       }
 
-      const data = await response.json();
-      return data.response;
+      const data: ChatResponse = await response.json();
+      return data;
     } catch (error) {
       console.error('Chat error:', error);
-      return "I apologize, but I'm having trouble connecting. Please call us at (917) 993-7306 for immediate assistance.";
+      return {
+        response: "I apologize, but I'm having trouble connecting. Please call us at (917) 993-7306 for immediate assistance.",
+        conversationId: conversationId || `tmj_${Date.now()}`,
+        stage: 'error',
+        gatheredInfo: {}
+      };
     }
   }
 

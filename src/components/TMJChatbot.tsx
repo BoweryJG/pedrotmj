@@ -9,13 +9,17 @@ import {
   Typography,
   Paper,
   Fab,
+  Button,
   useMediaQuery,
-  useTheme
+  useTheme,
+  Chip
 } from '@mui/material';
 import { 
   Close as CloseIcon,
   Send as SendIcon,
-  ChatBubbleOutline as ChatIcon
+  ChatBubbleOutline as ChatIcon,
+  CalendarToday as CalendarIcon,
+  CheckCircle as CheckIcon
 } from '@mui/icons-material';
 import { styled, keyframes } from '@mui/material/styles';
 import chatService from '../services/chatService';
@@ -169,10 +173,79 @@ const StyledTextField = styled(TextField)(() => ({
   },
 }));
 
+const BookingButtonsContainer = styled(Box)(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '8px',
+  marginTop: '12px',
+  marginBottom: '8px',
+}));
+
+const BookingSlotButton = styled(Button)(() => ({
+  padding: '12px 16px',
+  backgroundColor: 'rgba(212, 175, 55, 0.1)',
+  border: '1px solid rgba(212, 175, 55, 0.3)',
+  borderRadius: '8px',
+  color: '#D4AF37',
+  textTransform: 'none',
+  fontWeight: 500,
+  justifyContent: 'flex-start',
+  '&:hover': {
+    backgroundColor: 'rgba(212, 175, 55, 0.2)',
+    borderColor: 'rgba(212, 175, 55, 0.5)',
+    transform: 'translateY(-1px)',
+    boxShadow: '0 4px 8px rgba(212, 175, 55, 0.2)',
+  },
+  '&:active': {
+    transform: 'translateY(0)',
+  },
+  '& .MuiButton-startIcon': {
+    marginRight: '12px',
+    color: '#D4AF37',
+  },
+  transition: 'all 0.2s ease-in-out',
+}));
+
+const BookingConfirmation = styled(Paper)(() => ({
+  padding: '16px',
+  marginTop: '12px',
+  backgroundColor: 'rgba(76, 175, 80, 0.1)',
+  border: '1px solid rgba(76, 175, 80, 0.3)',
+  borderRadius: '8px',
+  color: '#81C784',
+  display: 'flex',
+  alignItems: 'center',
+  gap: '12px',
+}));
+
+interface BookingSlot {
+  id: string;
+  displayText: string;
+  date: string;
+  time: string;
+  timestamp: string;
+}
+
+interface ChatResponse {
+  response: string;
+  conversationId: string;
+  stage: string;
+  gatheredInfo: any;
+  bookingSlots?: BookingSlot[];
+  appointmentRequestId?: string;
+  isBookingRequest?: boolean;
+  isInfoRequest?: boolean;
+  isPainExpression?: boolean;
+}
+
 interface MessageType {
   role: 'user' | 'assistant';
   content: string;
   timestamp: Date;
+  bookingSlots?: BookingSlot[];
+  appointmentRequestId?: string;
+  isBookingRequest?: boolean;
+  isBooking?: boolean;
 }
 
 interface TMJChatbotProps {
@@ -188,6 +261,10 @@ export default function TMJChatbot({ isOpen, onClose, onOpen, selectedSymptoms =
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [showFab, setShowFab] = useState(true);
+  const [conversationId, setConversationId] = useState<string>(`tmj-${Date.now()}`);
+  const [currentBookingRequest, setCurrentBookingRequest] = useState<string | null>(null);
+  const [bookedAppointment, setBookedAppointment] = useState<BookingSlot | null>(null);
+  const [isBookingInProgress, setIsBookingInProgress] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -228,18 +305,31 @@ export default function TMJChatbot({ isOpen, onClose, onOpen, selectedSymptoms =
     setIsTyping(true);
 
     try {
-      const response = await chatService.sendMessage(
+      const chatResponse: ChatResponse = await chatService.sendMessage(
         inputValue, 
-        `tmj-${Date.now()}`,
+        conversationId,
         selectedSymptoms,
         severityLevel
       );
 
+      // Update conversation ID if provided
+      if (chatResponse.conversationId) {
+        setConversationId(chatResponse.conversationId);
+      }
+
       const assistantMessage: MessageType = {
         role: 'assistant',
-        content: response,
-        timestamp: new Date()
+        content: chatResponse.response,
+        timestamp: new Date(),
+        bookingSlots: chatResponse.bookingSlots,
+        appointmentRequestId: chatResponse.appointmentRequestId,
+        isBookingRequest: chatResponse.isBookingRequest
       };
+
+      // Store appointment request ID for later booking
+      if (chatResponse.appointmentRequestId) {
+        setCurrentBookingRequest(chatResponse.appointmentRequestId);
+      }
 
       setMessages(prev => [...prev, assistantMessage]);
     } catch (error) {
@@ -250,6 +340,73 @@ export default function TMJChatbot({ isOpen, onClose, onOpen, selectedSymptoms =
         timestamp: new Date()
       }]);
     } finally {
+      setIsTyping(false);
+    }
+  };
+
+  const handleSlotSelection = async (slot: BookingSlot) => {
+    if (!slot || isBookingInProgress) return;
+
+    setIsBookingInProgress(true);
+    setIsTyping(true);
+
+    try {
+      // Show user's selection
+      const userMessage: MessageType = {
+        role: 'user',
+        content: `I'd like to book the ${slot.displayText} appointment slot.`,
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, userMessage]);
+
+      // Call the booking endpoint
+      const backendUrl = import.meta.env.VITE_BACKEND_URL || 'https://pedrobackend.onrender.com';
+      const response = await fetch(`${backendUrl}/api/tmj/book-slot`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          conversationId,
+          appointmentRequestId: currentBookingRequest,
+          selectedSlot: slot,
+          patientContactInfo: {
+            patient_name: 'TMJ Patient', // Placeholder - to be collected in future enhancement
+            patient_email: 'patient@placeholder.com', // Placeholder - to be collected in future enhancement  
+            patient_phone: '+15551234567' // Placeholder - to be collected in future enhancement
+          }
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Booking failed');
+      }
+
+      const bookingResult = await response.json();
+
+      if (bookingResult.success) {
+        setBookedAppointment(slot);
+        
+        const confirmationMessage: MessageType = {
+          role: 'assistant',
+          content: `Perfect! Your TMJ consultation with Dr. Pedro is confirmed for ${slot.displayText}. You will receive confirmation via email and SMS shortly. Your confirmation number is ${bookingResult.confirmationNumber}. We look forward to helping you with your TMJ relief!`,
+          timestamp: new Date(),
+          isBooking: true
+        };
+        
+        setMessages(prev => [...prev, confirmationMessage]);
+      } else {
+        throw new Error(bookingResult.error || 'Booking failed');
+      }
+    } catch (error) {
+      console.error('Error booking appointment:', error);
+      setMessages(prev => [...prev, {
+        role: 'assistant',
+        content: `I apologize, but there was an issue booking your appointment. Please call us at (929) 242-4535 to complete your booking, or try selecting a different time slot.`,
+        timestamp: new Date()
+      }]);
+    } finally {
+      setIsBookingInProgress(false);
       setIsTyping(false);
     }
   };
@@ -315,16 +472,61 @@ export default function TMJChatbot({ isOpen, onClose, onOpen, selectedSymptoms =
         }}>
           <MessageContainer>
             {messages.map((message, index) => (
-              <Message key={index} isUser={message.role === 'user'} elevation={0}>
-                <Typography variant="body2" sx={{ lineHeight: 1.6 }}>
-                  {message.content}
-                </Typography>
-              </Message>
+              <Box key={index}>
+                <Message isUser={message.role === 'user'} elevation={0}>
+                  <Typography variant="body2" sx={{ lineHeight: 1.6 }}>
+                    {message.content}
+                  </Typography>
+                  
+                  {/* Show booking confirmation for confirmed appointments */}
+                  {message.isBooking && bookedAppointment && (
+                    <BookingConfirmation elevation={0}>
+                      <CheckIcon />
+                      <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                        Appointment Confirmed: {bookedAppointment.displayText}
+                      </Typography>
+                    </BookingConfirmation>
+                  )}
+                </Message>
+
+                {/* Show booking slot buttons for assistant messages with slots */}
+                {message.role === 'assistant' && message.bookingSlots && message.bookingSlots.length > 0 && !bookedAppointment && (
+                  <BookingButtonsContainer>
+                    <Typography variant="body2" sx={{ color: '#D4AF37', fontWeight: 500, marginBottom: '8px' }}>
+                      Click to book your preferred time:
+                    </Typography>
+                    {message.bookingSlots.map((slot) => (
+                      <BookingSlotButton
+                        key={slot.id}
+                        onClick={() => handleSlotSelection(slot)}
+                        disabled={isBookingInProgress}
+                        startIcon={<CalendarIcon />}
+                        fullWidth
+                      >
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', alignItems: 'center' }}>
+                          <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                            {slot.displayText}
+                          </Typography>
+                          <Chip 
+                            label="Available" 
+                            size="small"
+                            sx={{ 
+                              backgroundColor: 'rgba(76, 175, 80, 0.2)',
+                              color: '#81C784',
+                              border: '1px solid rgba(76, 175, 80, 0.3)'
+                            }}
+                          />
+                        </Box>
+                      </BookingSlotButton>
+                    ))}
+                  </BookingButtonsContainer>
+                )}
+              </Box>
             ))}
             {isTyping && (
               <Message isUser={false} elevation={0}>
                 <Typography variant="body2" sx={{ fontStyle: 'italic', opacity: 0.7 }}>
-                  Typing...
+                  {isBookingInProgress ? 'Booking your appointment...' : 'Typing...'}
                 </Typography>
               </Message>
             )}
