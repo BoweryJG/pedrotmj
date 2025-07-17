@@ -1,28 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import './TMJHeroSection.css';
 
-interface TMJHeroSectionProps {
-  onCTAClick?: () => void;
-}
-
-const TMJHeroSection: React.FC<TMJHeroSectionProps> = ({ onCTAClick }) => {
+const TMJHeroSection: React.FC = () => {
   const [animate, setAnimate] = useState(false);
 
   useEffect(() => {
-    const timeout = setTimeout(() => setAnimate(true), 1000);
+    const timeout = setTimeout(() => setAnimate(true), 500);
     return () => clearTimeout(timeout);
   }, []);
-
-  const handleCTAClick = () => {
-    if (onCTAClick) {
-      onCTAClick();
-    } else {
-      const bookingSection = document.getElementById('booking-section');
-      if (bookingSection) {
-        bookingSection.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-  };
 
   return (
     <section className="tmj-hero">
@@ -41,36 +26,33 @@ const TMJHeroSection: React.FC<TMJHeroSectionProps> = ({ onCTAClick }) => {
                 <stop offset="100%" stopColor="rgba(255, 255, 255, 0.2)" />
               </linearGradient>
             </defs>
-            
-            {/* Anatomical Jaw Path */}
             <path
-              d="M50,140 Q80,120 110,125 Q130,130 150,125 Q170,120 190,115 Q210,110 240,120 Q260,125 280,130"
+              d="M40,160 Q75,130 110,140 Q140,150 180,145 Q210,140 250,120"
               stroke="url(#jawGradient)"
               strokeWidth="3"
               fill="none"
               className={animate ? 'jaw-relax' : 'jaw-tense'}
             />
-            
-            {/* TMJ Joint Marker */}
             <circle
-              cx="150"
-              cy="125"
+              cx="180"
+              cy="145"
               r="4"
               fill="#D4AF37"
               className={animate ? 'tmj-marker' : ''}
             />
-            
-            {/* Golden Pulse Ring */}
             <circle
-              cx="150"
-              cy="125"
+              cx="180"
+              cy="145"
               r="30"
               fill="url(#goldenPulse)"
               className={animate ? 'golden-pulse' : ''}
             />
           </svg>
-          
-          <div className={`tmj-dial ${animate ? 'spin' : ''}`}>
+
+          <div
+            className={`tmj-dial ${animate ? 'spin' : ''}`}
+            style={{ top: '72%', left: '60%' }}
+          >
             <div className="dial-outer-ring"></div>
             <div className="tmj-dial-screws">
               <div className="screw screw-1"></div>
@@ -88,11 +70,13 @@ const TMJHeroSection: React.FC<TMJHeroSectionProps> = ({ onCTAClick }) => {
             <div className="tmj-glare-overlay" />
           </div>
         </div>
-        
+
         <div className="hero-text">
           <h1 className={animate ? 'text-fade-in' : ''}>Unlock the Jaw of Life</h1>
-          <p className={animate ? 'text-fade-in' : ''}>Precision-engineered TMJ therapy that transforms pain into freedom.</p>
-          <button className={animate ? 'cta-animate' : ''} onClick={handleCTAClick}>
+          <p className={animate ? 'text-fade-in' : ''}>
+            Precision-engineered TMJ therapy that transforms pain into freedom.
+          </p>
+          <button className={animate ? 'cta-animate' : ''}>
             Begin Your Transformation
           </button>
           {animate && <audio autoPlay src="/sounds/click.mp3" />}
