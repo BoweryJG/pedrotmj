@@ -222,6 +222,7 @@ function App() {
       <TMJChatbot 
         isOpen={chatOpen}
         onClose={closeChat}
+        onOpen={openChat}
         selectedSymptoms={selectedSymptoms}
         severityLevel={severityLevel}
       />

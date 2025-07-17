@@ -178,11 +178,12 @@ interface MessageType {
 interface TMJChatbotProps {
   isOpen: boolean;
   onClose: () => void;
+  onOpen?: () => void;
   selectedSymptoms?: string[];
   severityLevel?: number;
 }
 
-export default function TMJChatbot({ isOpen, onClose, selectedSymptoms = [], severityLevel = 0 }: TMJChatbotProps) {
+export default function TMJChatbot({ isOpen, onClose, onOpen, selectedSymptoms = [], severityLevel = 0 }: TMJChatbotProps) {
   const [messages, setMessages] = useState<MessageType[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -267,11 +268,9 @@ export default function TMJChatbot({ isOpen, onClose, selectedSymptoms = [], sev
 
   const handleFabClick = () => {
     setShowFab(false);
-    setTimeout(() => {
-      if (onClose) {
-        onClose();
-      }
-    }, 100);
+    if (onOpen) {
+      onOpen();
+    }
   };
 
   return (
