@@ -2,12 +2,17 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import TMJChatbot from './components/TMJChatbot';
 import TMJHeroSection from './components/TMJHeroSection';
+import TMJHeroSectionPolished from './components/TMJHeroSection-Polished';
 
 function App() {
   const [selectedSymptoms, setSelectedSymptoms] = useState<string[]>([]);
   const [severityLevel, setSeverityLevel] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [chatOpen, setChatOpen] = useState(false);
+  
+  // Check for polished version via query parameter
+  const urlParams = new URLSearchParams(window.location.search);
+  const usePolishedVersion = urlParams.get('polished') === 'true';
 
   // Loading animation
   useEffect(() => {
@@ -71,7 +76,7 @@ function App() {
       <div className="noise-overlay"></div>
 
       {/* HERO SECTION */}
-      <TMJHeroSection />
+      {usePolishedVersion ? <TMJHeroSectionPolished /> : <TMJHeroSection />}
 
       {/* SYMPTOM CHECKER */}
       <section className="symptom-checker">

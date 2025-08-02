@@ -1,0 +1,637 @@
+/* ICONIC TMJ HERO - MEDICAL PRECISION ANIMATION SYSTEM */
+
+/* ========== ANIMATION TIMING SYSTEM ========== */
+:root {
+  /* Master timing based on 72 BPM medical rhythm */
+  --beat: 0.833s;
+  --half-beat: 0.417s;
+  --double-beat: 1.667s;
+  --quad-beat: 3.333s;
+  
+  /* Phase durations */
+  --phase-diagnosis: 3s;
+  --phase-treatment: 3s;
+  --phase-restoration: 3s;
+  --total-cycle: 9s;
+  
+  /* Medical color palette */
+  --medical-blue: #00A8E8;
+  --diagnostic-amber: #FFA500;
+  --success-green: #00D084;
+  --tissue-red: #E74C3C;
+  --bone-ivory: #F8F8F0;
+  --neural-purple: #8B7FD8;
+  
+  /* Golden ratio for spacing */
+  --golden: 1.618;
+}
+
+/* ========== CORE LAYOUT ========== */
+.tmj-hero {
+  min-height: 100vh;
+  background: radial-gradient(ellipse at center, #0A0F14 0%, #000507 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.tmj-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 30% 40%,
+    rgba(0, 168, 232, 0.03) 0%,
+    transparent 50%
+  );
+  animation: ambientPulse var(--quad-beat) ease-in-out infinite;
+}
+
+@keyframes ambientPulse {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.05); }
+}
+
+.hero-content {
+  max-width: 1400px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: calc(3rem * var(--golden));
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* ========== MAIN VISUALIZATION CONTAINER ========== */
+.tmj-anatomy-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 600px;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.tmj-anatomy-container.active {
+  animation: containerInitialize var(--double-beat) cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes containerInitialize {
+  0% {
+    transform: scale(0.9) rotateX(5deg);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) rotateX(0deg);
+    opacity: 1;
+  }
+}
+
+/* ========== MEDICAL PARTICLE FIELD (Reduced) ========== */
+.particle-field {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: var(--medical-blue);
+  border-radius: 50%;
+  opacity: 0;
+  animation: medicalParticle var(--quad-beat) ease-in-out infinite;
+}
+
+/* Position 15 particles in golden ratio spiral */
+.particle:nth-child(1) { left: 50%; top: 50%; animation-delay: 0s; }
+.particle:nth-child(2) { left: 55%; top: 45%; animation-delay: 0.1s; }
+.particle:nth-child(3) { left: 60%; top: 52%; animation-delay: 0.2s; }
+.particle:nth-child(4) { left: 53%; top: 58%; animation-delay: 0.3s; }
+.particle:nth-child(5) { left: 45%; top: 55%; animation-delay: 0.4s; }
+.particle:nth-child(6) { left: 40%; top: 48%; animation-delay: 0.5s; }
+.particle:nth-child(7) { left: 47%; top: 42%; animation-delay: 0.6s; }
+.particle:nth-child(8) { left: 58%; top: 40%; animation-delay: 0.7s; }
+.particle:nth-child(9) { left: 65%; top: 47%; animation-delay: 0.8s; }
+.particle:nth-child(10) { left: 62%; top: 58%; animation-delay: 0.9s; }
+.particle:nth-child(11) { left: 50%; top: 62%; animation-delay: 1.0s; }
+.particle:nth-child(12) { left: 38%; top: 57%; animation-delay: 1.1s; }
+.particle:nth-child(13) { left: 35%; top: 45%; animation-delay: 1.2s; }
+.particle:nth-child(14) { left: 42%; top: 38%; animation-delay: 1.3s; }
+.particle:nth-child(15) { left: 55%; top: 35%; animation-delay: 1.4s; }
+
+@keyframes medicalParticle {
+  0%, 100% { 
+    opacity: 0; 
+    transform: translate(0, 0) scale(0.5);
+  }
+  50% { 
+    opacity: 0.6; 
+    transform: translate(
+      calc(sin(var(--delay) * 360deg) * 20px),
+      calc(cos(var(--delay) * 360deg) * 20px)
+    ) scale(1);
+  }
+}
+
+/* ========== DIAGNOSTIC GRID SYSTEM ========== */
+.medical-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  animation: gridDiagnostic var(--phase-diagnosis) ease-out forwards;
+}
+
+@keyframes gridDiagnostic {
+  0% { opacity: 0; transform: scale(1.1); }
+  30% { opacity: 0.3; transform: scale(1); }
+  100% { opacity: 0.1; }
+}
+
+.grid-lines {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(90deg, var(--medical-blue) 1px, transparent 1px),
+    linear-gradient(0deg, var(--medical-blue) 1px, transparent 1px);
+  background-size: 50px 50px;
+  opacity: 0.2;
+  animation: gridScan var(--double-beat) linear infinite;
+}
+
+@keyframes gridScan {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(50px, 50px); }
+}
+
+/* ========== ADVANCED SVG ANATOMY ========== */
+.tmj-anatomy-svg {
+  width: 100%;
+  height: 100%;
+  max-width: 500px;
+  max-height: 400px;
+  position: relative;
+  z-index: 2;
+  filter: drop-shadow(0 4px 20px rgba(0, 168, 232, 0.2));
+}
+
+/* Phase-based animations for bones */
+.upper-jaw, .lower-jaw {
+  stroke-dasharray: 800;
+  stroke-dashoffset: 800;
+  transition: all var(--beat) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.upper-jaw.phase-1, .lower-jaw.phase-1 {
+  animation: boneScan var(--phase-diagnosis) ease-out forwards;
+}
+
+@keyframes boneScan {
+  0% { stroke-dashoffset: 800; opacity: 0; }
+  50% { stroke-dashoffset: 0; opacity: 0.6; }
+  100% { stroke-dashoffset: 0; opacity: 1; }
+}
+
+/* TMJ Joint animations synchronized with phases */
+.tmj-joint-left, .tmj-joint-right {
+  transform-origin: center;
+  opacity: 0;
+}
+
+.tmj-joint-left.phase-1, .tmj-joint-right.phase-1 {
+  animation: jointDiagnose var(--phase-diagnosis) ease-out forwards;
+}
+
+.tmj-joint-left.phase-2, .tmj-joint-right.phase-2 {
+  animation: jointTreat var(--phase-treatment) ease-in-out infinite;
+}
+
+.tmj-joint-left.phase-3, .tmj-joint-right.phase-3 {
+  animation: jointRestore var(--beat) ease-in-out infinite;
+}
+
+@keyframes jointDiagnose {
+  0% { opacity: 0; transform: scale(0); }
+  50% { opacity: 1; transform: scale(1.2); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes jointTreat {
+  0%, 100% { 
+    filter: drop-shadow(0 0 10px var(--diagnostic-amber));
+    transform: scale(1);
+  }
+  50% { 
+    filter: drop-shadow(0 0 20px var(--diagnostic-amber));
+    transform: scale(1.1);
+  }
+}
+
+@keyframes jointRestore {
+  0%, 100% { 
+    filter: drop-shadow(0 0 5px var(--success-green));
+  }
+  50% { 
+    filter: drop-shadow(0 0 15px var(--success-green));
+  }
+}
+
+/* Muscle activation sequences */
+.muscle-group {
+  opacity: 0;
+}
+
+.muscle-group.phase-2 path {
+  animation: muscleActivate var(--beat) ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+.temporalis.phase-2 { animation-delay: 0s; }
+.masseter.phase-2 { animation-delay: var(--half-beat); }
+
+@keyframes muscleActivate {
+  0% { 
+    opacity: 0;
+    stroke-width: 0;
+    stroke: var(--tissue-red);
+  }
+  50% {
+    opacity: 0.9;
+    stroke-width: 8;
+    stroke: var(--diagnostic-amber);
+  }
+  100% {
+    opacity: 0.7;
+    stroke-width: 6;
+    stroke: var(--tissue-red);
+  }
+}
+
+/* Neural pathway activation */
+.neural-network {
+  opacity: 0;
+}
+
+.neural-network.phase-2 {
+  animation: neuralActivate var(--phase-treatment) ease-out forwards;
+}
+
+@keyframes neuralActivate {
+  0% {
+    opacity: 0;
+    stroke-dasharray: 300;
+    stroke-dashoffset: 300;
+  }
+  50% {
+    opacity: 0.8;
+    stroke-dashoffset: 0;
+    filter: drop-shadow(0 0 10px var(--neural-purple));
+  }
+  100% {
+    opacity: 0.6;
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Jaw movement for restoration phase */
+.lower-jaw.phase-3 {
+  animation: jawFunction var(--double-beat) ease-in-out infinite;
+  transform-origin: 110px 200px;
+}
+
+@keyframes jawFunction {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(8deg); }
+  50% { transform: rotate(12deg); }
+  75% { transform: rotate(6deg); }
+}
+
+/* ========== PRECISION TARGETING SYSTEM ========== */
+.targeting-system {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.targeting-system.phase-1 {
+  animation: targetingDeploy var(--phase-diagnosis) ease-out forwards;
+}
+
+@keyframes targetingDeploy {
+  0% { opacity: 0; transform: scale(0.5) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1) rotate(180deg); }
+  100% { opacity: 0.5; transform: scale(1) rotate(360deg); }
+}
+
+/* ========== THERAPEUTIC ENERGY WAVES ========== */
+.energy-waves {
+  opacity: 0;
+}
+
+.energy-waves.phase-2 .wave-ring {
+  animation: therapeuticWave var(--double-beat) ease-out infinite;
+}
+
+@keyframes therapeuticWave {
+  0% {
+    r: 12;
+    opacity: 0.8;
+    stroke: var(--diagnostic-amber);
+    stroke-width: 3;
+  }
+  100% {
+    r: 80;
+    opacity: 0;
+    stroke: var(--diagnostic-amber);
+    stroke-width: 1;
+  }
+}
+
+/* ========== MEDICAL DATA DISPLAY ========== */
+.medical-data {
+  opacity: 0;
+}
+
+.medical-data.phase-3 {
+  animation: dataReveal var(--beat) ease-out forwards;
+}
+
+@keyframes dataReveal {
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.data-point {
+  font-family: 'SF Mono', 'Monaco', monospace;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.data-point.optimal {
+  fill: var(--success-green);
+  filter: drop-shadow(0 0 5px var(--success-green));
+}
+
+/* ========== DIAGNOSTIC INSTRUMENTS ========== */
+.precision-instruments {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Medical Scope - Phase 1 */
+.medical-scope {
+  position: absolute;
+  top: 15%;
+  right: 10%;
+  opacity: 0;
+}
+
+.medical-scope.phase-1 {
+  animation: scopeDeploy var(--phase-diagnosis) ease-out forwards;
+}
+
+@keyframes scopeDeploy {
+  0% { opacity: 0; transform: translateX(50px); }
+  50% { opacity: 1; transform: translateX(0); }
+  100% { opacity: 0.8; }
+}
+
+.scope-beam {
+  width: 2px;
+  height: 200px;
+  background: linear-gradient(
+    to bottom,
+    var(--medical-blue) 0%,
+    transparent 100%
+  );
+  opacity: 0;
+  animation: beamScan var(--double-beat) ease-in-out infinite;
+  animation-delay: var(--phase-diagnosis);
+}
+
+@keyframes beamScan {
+  0%, 100% { opacity: 0; transform: scaleY(0.5); }
+  50% { opacity: 0.8; transform: scaleY(1); }
+}
+
+/* Diagnostic Panel - Phase 2 */
+.diagnostic-panel {
+  position: absolute;
+  bottom: 20%;
+  left: 10%;
+  opacity: 0;
+}
+
+.diagnostic-panel.phase-2 {
+  animation: panelActivate var(--beat) ease-out forwards;
+  animation-delay: var(--phase-diagnosis);
+}
+
+@keyframes panelActivate {
+  0% { opacity: 0; transform: scale(0.8); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.panel-screen {
+  width: 150px;
+  height: 80px;
+  background: #001122;
+  border: 2px solid var(--medical-blue);
+  border-radius: 4px;
+  padding: 8px;
+  font-family: 'SF Mono', monospace;
+  font-size: 10px;
+  color: var(--success-green);
+}
+
+.reading {
+  display: block;
+  margin: 2px 0;
+  opacity: 0;
+  animation: readingUpdate var(--half-beat) ease-out forwards;
+}
+
+.reading:nth-child(1) { animation-delay: 0.1s; }
+.reading:nth-child(2) { animation-delay: 0.2s; }
+.reading:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes readingUpdate {
+  0% { opacity: 0; transform: translateX(-10px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+/* ========== HERO TEXT STYLING ========== */
+.hero-text {
+  text-align: left;
+  color: white;
+  position: relative;
+  z-index: 3;
+}
+
+.hero-text h1 {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 200;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(
+    135deg,
+    var(--medical-blue) 0%,
+    var(--diagnostic-amber) 50%,
+    var(--success-green) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  opacity: 0;
+  animation: titleReveal var(--double-beat) ease-out forwards;
+  animation-delay: var(--beat);
+}
+
+@keyframes titleReveal {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.hero-text p {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
+  font-size: 1.125rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 2.5rem;
+  line-height: 1.6;
+  opacity: 0;
+  animation: textReveal var(--double-beat) ease-out forwards;
+  animation-delay: calc(var(--beat) * 1.5);
+}
+
+@keyframes textReveal {
+  0% { opacity: 0; transform: translateY(15px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.hero-text button {
+  background: var(--medical-blue);
+  color: white;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 1rem 2.5rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  animation: buttonReveal var(--double-beat) ease-out forwards;
+  animation-delay: calc(var(--beat) * 2);
+  transition: all var(--half-beat) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes buttonReveal {
+  0% { opacity: 0; transform: translateY(15px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.hero-text button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.2) 50%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  transition: transform var(--beat) ease;
+}
+
+.hero-text button:hover {
+  background: var(--diagnostic-amber);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(255, 165, 0, 0.3);
+}
+
+.hero-text button:hover::before {
+  transform: translateX(100%);
+}
+
+/* ========== PHASE INDICATOR UI ========== */
+.phase-indicator {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  gap: 10px;
+  z-index: 10;
+}
+
+.phase-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transition: all var(--half-beat) ease;
+}
+
+.phase-dot.active {
+  background: var(--medical-blue);
+  box-shadow: 0 0 10px var(--medical-blue);
+}
+
+.phase-dot.phase-1.active { background: var(--medical-blue); }
+.phase-dot.phase-2.active { background: var(--diagnostic-amber); }
+.phase-dot.phase-3.active { background: var(--success-green); }
+
+/* ========== RESPONSIVE OPTIMIZATIONS ========== */
+@media (max-width: 768px) {
+  .hero-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .tmj-anatomy-container {
+    min-height: 400px;
+  }
+  
+  .precision-instruments {
+    transform: scale(0.8);
+  }
+}
+
+/* ========== PERFORMANCE ========== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ========== HIGH CONTRAST MODE ========== */
+@media (prefers-contrast: high) {
+  .tmj-hero {
+    background: black;
+  }
+  
+  .hero-text h1,
+  .hero-text p {
+    -webkit-text-fill-color: white;
+    color: white;
+  }
+  
+  .hero-text button {
+    border: 2px solid white;
+  }
+}
